@@ -31,7 +31,8 @@ class App extends Component {
     //   value: value
     // });
     this.socket.send(JSON.stringify(value));
-    console.log(this.state.value);
+    // console.log(this.state.value);
+    console.log(model.getPosition());
   };
   render() {
     const requireConfig = {
@@ -48,8 +49,8 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header> */}
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          App State: {this.state.value}
+          To get started, edit <code>src/App.js</code> and save to reload. App
+          State: {this.state.value}
         </p>
         <MonacoEditor
           ref="monaco"
