@@ -13,7 +13,9 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    this.socket = new WebSocket("wss://secret-meadow-50707.herokuapp.com/");
+    const url = "wss://secret-meadow-50707.herokuapp.com/";
+    this.socket = new WebSocket(url);
+    this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
     this.socket.onopen = e => {
       console.log("opened");
     };
@@ -25,11 +27,11 @@ class App extends Component {
   onChange = e => {
     const model = this.refs.monaco.editor.getModel();
     const value = model.getValue();
-    this.setState({
-      value: value
-    });
-    console.log(this.state.value);
+    // this.setState({
+    //   value: value
+    // });
     this.socket.send(JSON.stringify(value));
+    console.log(this.state.value);
   };
   render() {
     const requireConfig = {
@@ -47,6 +49,7 @@ class App extends Component {
         </header> */}
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
+          App State: {this.state.value}
         </p>
         <MonacoEditor
           ref="monaco"
