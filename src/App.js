@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import MonacoEditor from "react-monaco-editor";
-// import MessageList from "./MessageList.js";
-// import ChatBar from "./ChatBar.js";
-// import NavBar from "./NavBar.js";
+import { BrowserRouter, Link } from "react-router-dom";
+import Route from "react-router-dom/Route";
+// import passport from "passport";
+// import GithubStrategy from "passport-github2";
+import NavBar from "./NavBar.js";
+
+// const passport = require("passport");
+// const GithubStrategy = require("passport-github2");
+
 require("monaco-editor/min/vs/editor/editor.main.css");
 
 class App extends Component {
@@ -21,27 +27,25 @@ class App extends Component {
 
   componentWillMount() {
     // const url = "wss://secret-meadow-50707.herokuapp.com/"; //use this for production
-    const url = "ws://localhost:3001"; //for development only
-    this.socket = new WebSocket(url);
+    // const url = "ws://localhost:3001"; //use this for development
+    // this.socket = new WebSocket(url);
     // this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/"; //use this for production
-    this.socket.wsURL = "ws://localhost:3001"; //for development only
-
-    this.socket.onopen = e => {
-      console.log("opened");
-      //send state to newly connected users??
-    };
-
-    this.socket.onmessage = e => {
-      const parsedData = JSON.parse(e.data);
-      // console.log("parsedData: ", parsedData);
-      console.log("this.state (before): ", this.state);
-      this.setState({ message: parsedData });
-      this.refs.monaco.editor.setPosition(
-        this.state.message.cursor.line,
-        this.state.message.cursor.column
-      );
-      console.log("this.state (after): ", this.state);
-    };
+    // this.socket.wsURL = "ws://localhost:3001"; //use this for development
+    // this.socket.onopen = e => {
+    //   console.log("opened");
+    //   //send state to newly connected users??
+    // };
+    // this.socket.onmessage = e => {
+    //   const parsedData = JSON.parse(e.data);
+    //   // console.log("parsedData: ", parsedData);
+    //   console.log("this.state (before): ", this.state);
+    //   // this.setState({ message: parsedData });
+    //   // this.refs.monaco.editor.setPosition(
+    //   //   this.state.message.cursor.line,
+    //   //   this.state.message.cursor.column
+    //   // );
+    //   console.log("this.state (after): ", this.state);
+    // };
   }
 
   onChange = e => {
@@ -60,6 +64,13 @@ class App extends Component {
 
     const model = this.refs.monaco.editor.getModel();
     const value = model.getValue();
+
+    this.setState({
+      message: {
+        code: value
+      }
+    });
+
     const message = {
       code: value,
       cursor: {
@@ -68,7 +79,7 @@ class App extends Component {
       }
     };
 
-    this.socket.send(JSON.stringify(message));
+    // this.socket.send(JSON.stringify(message));
   };
 
   render() {
@@ -80,34 +91,39 @@ class App extends Component {
       }
     };
     return (
-      <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header> */}
-        <p className="App-intro">
-          App State Value: {this.state.message.code}
-          {/* Cursor Postion Line: {this.state.cursor.line}
+      <BrowserRouter>
+        <div className="App">
+          <NavBar />
+          <p className="App-intro">
+            App State Value: {this.state.message.code}
+            {/* Cursor Postion Line: {this.state.cursor.line}
           Cursor Postion Column: {this.state.cursor.column} */}
-        </p>
-        {/* <textarea
-          onChange={this.onChange}
-          value={this.state.message}
-          id="myTextarea"
-        >
-          {" "}
-        </textarea> */}
+          </p>
 
-        <MonacoEditor
-          ref="monaco"
-          width="800"
-          height="600"
-          language="javascript"
-          value={this.state.message.code}
-          onChange={this.onChange}
-          requireConfig={requireConfig}
-        />
-      </div>
+          <Link to="/auth/github">Login using Github (react route)</Link>
+
+          <br />
+          <a href="/auth/github">Login using Github (express route)</a>
+
+          <Route
+            path="/auth/github"
+            exact
+            render={() => {
+              return <h1>Logging In Using GitHub</h1>;
+            }}
+          />
+
+          <MonacoEditor
+            ref="monaco"
+            width="800"
+            height="600"
+            language="javascript"
+            value={this.state.message.code}
+            onChange={this.onChange}
+            requireConfig={requireConfig}
+          />
+        </div>
+      </BrowserRouter>
     );
   }
 }

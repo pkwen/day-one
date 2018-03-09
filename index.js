@@ -11,8 +11,26 @@ const SocketServer = WebSocket.Server;
 const uuidv1 = require("uuid/v1");
 //
 
-const app = express();
+const passport = require("passport");
+const GitHubStrategy = require("passport-github2").Strategy;
 
+passport.use(
+  new GitHubStrategy(
+    {
+      //options for github strategy
+      clientID: "57863a3c5df5ea6c3a77",
+      clientSecret: "445db6c23a9d4fa27d890839650bf1a3a4cb8ed7",
+      callbackURL: "http://localhost:3000/auth/github/redirect"
+    },
+    () => {
+      //passport callback function
+    }
+  )
+);
+
+const app = express();
+app.use(passport.initialize());
+app.use(passport.session());
 // Initialize an express app with some security defaults
 app.use(https).use(helmet());
 
@@ -26,11 +44,34 @@ app.use(https).use(helmet());
 app.use(express.static("build"));
 
 // If no explicit matches were found, serve index.html
+
+app.use(notfound).use(errors);
+
+//passport js authentication routes
+app.get(
+  "/auth/github",
+  // passport.authenticate("github", { scope: ["repo"] }),
+  // console.log("reached app.get /auth/github"),
+  function(req, res) {
+    res.send("logging in through github");
+  }
+);
+
+app.get(
+  "/auth/github/redirect",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  function(req, res) {
+    res.redirect("/");
+  }
+);
+
+app.get("/hello", function(req, res) {
+  res.send("hello");
+});
+
 app.get("*", function(req, res) {
   res.sendFile(__dirname + "/build/index.html");
 });
-
-app.use(notfound).use(errors);
 
 //
 

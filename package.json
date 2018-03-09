@@ -7,9 +7,12 @@
     "express-enforces-ssl": "^1.1.0",
     "helmet": "^3.8.1",
     "monaco-editor": "^0.10.1",
+    "passport": "^0.4.0",
+    "passport-github2": "^0.1.11",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-monaco-editor": "^0.13.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "ws": "4.0.0"
   },
