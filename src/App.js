@@ -36,18 +36,27 @@ class App extends Component {
       // console.log("parsedData: ", parsedData);
       console.log("this.state (before): ", this.state);
       this.setState({ message: parsedData });
+      this.refs.monaco.editor.setPosition(
+        this.state.message.cursor.line,
+        this.state.message.cursor.column
+      );
       console.log("this.state (after): ", this.state);
     };
   }
 
   onChange = e => {
     console.log("onChange invoked");
+    // const message = document.getElementById("myTextarea").value;
     // console.log(this.refs.monaco.editor.getPosition());
     console.log(
       "lineNumber: ",
       this.refs.monaco.editor.getPosition().lineNumber
     );
     console.log("column: ", this.refs.monaco.editor.getPosition().column);
+    // console.log(
+    //   "reason: ",
+    //   this.refs.monaco.editor.CursorPositionChangedEvent()
+    // );
 
     const model = this.refs.monaco.editor.getModel();
     const value = model.getValue();
@@ -81,6 +90,14 @@ class App extends Component {
           {/* Cursor Postion Line: {this.state.cursor.line}
           Cursor Postion Column: {this.state.cursor.column} */}
         </p>
+        {/* <textarea
+          onChange={this.onChange}
+          value={this.state.message}
+          id="myTextarea"
+        >
+          {" "}
+        </textarea> */}
+
         <MonacoEditor
           ref="monaco"
           width="800"
