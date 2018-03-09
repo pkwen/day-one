@@ -18,10 +18,13 @@ class App extends Component {
       }
     };
   }
+
   componentWillMount() {
-    const url = "wss://secret-meadow-50707.herokuapp.com/";
+    // const url = "wss://secret-meadow-50707.herokuapp.com/"; //use this for production
+    const url = "ws://localhost:3001"; //for development only
     this.socket = new WebSocket(url);
-    this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
+    // this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/"; //use this for production
+    this.socket.wsURL = "ws://localhost:3001"; //for development only
 
     this.socket.onopen = e => {
       console.log("opened");
@@ -30,41 +33,33 @@ class App extends Component {
 
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
+      // console.log("parsedData: ", parsedData);
+      console.log("this.state (before): ", this.state);
       this.setState({ message: parsedData });
+      console.log("this.state (after): ", this.state);
     };
   }
 
   onChange = e => {
-    const message = {
-      code: e,
-      cursor: {
-        line: this.refs.monaco.editor.getPosition().lineNumber,
-        column: this.refs.monaco.editor.getPosition().column
-      }
-    };
-    // const model = this.refs.monaco.editor.getModel();
-    // const value = model.getValue();
-    // this.setState({
-    //   value: value
-    // });
-    this.socket.send(JSON.stringify(message));
-    // this.setState({
-    //   cursor: {
-    //     line: this.refs.monaco.editor.getPosition().lineNumber,
-    //     column: this.refs.monaco.editor.getPosition().column
-    //   }
-    // });
-    // console.log(this.state.value);
-    // const cursor = this.state.cursor;
-    // const cursorLine = this.refs.monaco.editor.getPosition().lineNumber;
-    // const cursorColumn = this.refs.monaco.editor.getPosition().column;
-
-    console.log(this.refs.monaco.editor.getPosition());
+    console.log("onChange invoked");
+    // console.log(this.refs.monaco.editor.getPosition());
     console.log(
       "lineNumber: ",
       this.refs.monaco.editor.getPosition().lineNumber
     );
     console.log("column: ", this.refs.monaco.editor.getPosition().column);
+
+    const model = this.refs.monaco.editor.getModel();
+    const value = model.getValue();
+    const message = {
+      code: value,
+      cursor: {
+        line: this.refs.monaco.editor.getPosition().lineNumber,
+        column: this.refs.monaco.editor.getPosition().column
+      }
+    };
+
+    this.socket.send(JSON.stringify(message));
   };
 
   render() {
@@ -82,7 +77,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header> */}
         <p className="App-intro">
-          App State Value: {this.state.value}
+          App State Value: {this.state.message.code}
           {/* Cursor Postion Line: {this.state.cursor.line}
           Cursor Postion Column: {this.state.cursor.column} */}
         </p>
@@ -91,7 +86,7 @@ class App extends Component {
           width="800"
           height="600"
           language="javascript"
-          value={this.state.value}
+          value={this.state.message.code}
           onChange={this.onChange}
           requireConfig={requireConfig}
         />
