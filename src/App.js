@@ -9,31 +9,64 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
+      message: {
+        code: "initial text",
+        cursor: {
+          line: 0,
+          column: 0
+        }
+      }
     };
   }
   componentWillMount() {
     const url = "wss://secret-meadow-50707.herokuapp.com/";
     this.socket = new WebSocket(url);
     this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
+
     this.socket.onopen = e => {
       console.log("opened");
+      //send state to newly connected users??
     };
+
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
-      this.setState({ value: parsedData });
+      this.setState({ message: parsedData });
     };
   }
+
   onChange = e => {
-    const model = this.refs.monaco.editor.getModel();
-    const value = model.getValue();
+    const message = {
+      code: e,
+      cursor: {
+        line: this.refs.monaco.editor.getPosition().lineNumber,
+        column: this.refs.monaco.editor.getPosition().column
+      }
+    };
+    // const model = this.refs.monaco.editor.getModel();
+    // const value = model.getValue();
     // this.setState({
     //   value: value
     // });
-    this.socket.send(JSON.stringify(value));
+    this.socket.send(JSON.stringify(message));
+    // this.setState({
+    //   cursor: {
+    //     line: this.refs.monaco.editor.getPosition().lineNumber,
+    //     column: this.refs.monaco.editor.getPosition().column
+    //   }
+    // });
     // console.log(this.state.value);
-    console.log(model.getPosition());
+    // const cursor = this.state.cursor;
+    // const cursorLine = this.refs.monaco.editor.getPosition().lineNumber;
+    // const cursorColumn = this.refs.monaco.editor.getPosition().column;
+
+    console.log(this.refs.monaco.editor.getPosition());
+    console.log(
+      "lineNumber: ",
+      this.refs.monaco.editor.getPosition().lineNumber
+    );
+    console.log("column: ", this.refs.monaco.editor.getPosition().column);
   };
+
   render() {
     const requireConfig = {
       url:
@@ -49,8 +82,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header> */}
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload. App
-          State: {this.state.value}
+          App State Value: {this.state.value}
+          {/* Cursor Postion Line: {this.state.cursor.line}
+          Cursor Postion Column: {this.state.cursor.column} */}
         </p>
         <MonacoEditor
           ref="monaco"
