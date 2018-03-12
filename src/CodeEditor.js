@@ -26,13 +26,13 @@ class CodeEditor extends Component {
       <div className="code-editor">
         <MonacoEditor
           ref="monaco"
-          width="800"
+          width="1100"
           height="600"
           language="javascript"
           value={this.state.message.code}
           onChange={this.onChange}
           requireConfig={requireConfig}
-        />;
+        />
       </div>
     );
   }
