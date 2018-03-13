@@ -49,6 +49,10 @@ class TreeFolders extends React.Component {
       node.toggled = toggled;
     }
     this.setState({ cursor: node });
+    // console.log("toggling (cursor):", this.state.cursor);
+    console.log("toggling (cursor.name):", this.state.cursor.name);
+    // console.log("toggling (cursor.node):", this.state.cursor.node);
+    // console.log("toggling (cursor.node.name):", this.state.cursor.node.name);
   }
   render() {
     this.sync();
@@ -62,7 +66,7 @@ class TreeFolders extends React.Component {
   }
   async sync() {
     this.setState({
-      data: await GitHub.syncAll(this.props.token)
+      data: await GitHub.listRepos(this.props.token)
     });
   }
 }
