@@ -4,7 +4,8 @@ class Console extends Component {
   render() {
     return (
       <div className="console">
-        <h1> This is Console </h1>
+        <h5> Console </h5>
+        <div className="evaluated-code"> </div>
       </div>
     );
   }

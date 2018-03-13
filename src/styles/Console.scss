@@ -1,5 +1,14 @@
+$primaryColor: grey;
 .console {
-    h1 {
-        color: blueviolet;
-    }
+  .evaluated-code {
+    width: 600px;
+    height: 200px;
+    position: absolute;
+    background-color: $primaryColor;
+    top: 610px;
+    left: 300px;
+  }
+  h1 {
+    color: blueviolet;
+  }
 }

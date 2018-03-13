@@ -6,11 +6,8 @@ class CodeEditor extends Component {
     super(props);
     this.state = {
       message: {
-        code: "initial rendered text",
-        cursor: {
-          line: 3,
-          column: 0
-        }
+        code: "function hello() {\n\talert('Hello world!');\n}\n",
+        cursor: { line: 3, column: 0 }
       }
     };
   }
@@ -27,7 +24,7 @@ class CodeEditor extends Component {
         <MonacoEditor
           ref="monaco"
           width="1100"
-          height="600"
+          height="550"
           language="javascript"
           value={this.state.message.code}
           onChange={this.onChange}
