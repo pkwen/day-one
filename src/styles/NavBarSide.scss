@@ -2,9 +2,9 @@ $primaryColor: #21252c;
 .navbar-side {
     background-color: $primaryColor; // float: left;
     position: absolute;
-    border-right: 1px solid grey;
+    border-right: 2px solid red;
     top: 60px;
-    left: 5px;
+    padding-left: 15px;
     height: 100%;
     width: 300px;
     h1 {

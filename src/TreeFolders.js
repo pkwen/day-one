@@ -1,7 +1,9 @@
 import React from "react";
 import { Treebeard } from "react-treebeard";
+import { Base64 } from "js-base64";
+import GitHub from "./GitHub.js";
 
-const data = {
+let data = {
   name: "root",
   toggled: true,
   children: [
@@ -28,9 +30,16 @@ const data = {
 class TreeFolders extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: {},
+      cursor: {
+        active: true,
+        node: []
+      }
+    };
     this.onToggle = this.onToggle.bind(this);
   }
+
   onToggle(node, toggled) {
     if (this.state.cursor) {
       this.state.cursor.active = false;
@@ -42,13 +51,19 @@ class TreeFolders extends React.Component {
     this.setState({ cursor: node });
   }
   render() {
+    this.sync();
     return (
       <Treebeard
-        data={data}
+        data={this.state.data}
         onToggle={this.onToggle}
         className="tree-folders"
       />
     );
+  }
+  async sync() {
+    this.setState({
+      data: await GitHub.syncAll(this.props.token)
+    });
   }
 }
 

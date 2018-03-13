@@ -5,7 +5,10 @@ class Console extends Component {
     return (
       <div className="console">
         <h5> Console </h5>
-        <div className="evaluated-code"> </div>
+        <div className="console-divider" />
+        <div className="evaluated-code">
+          <p> > Evaluated Code Here </p>
+        </div>
       </div>
     );
   }

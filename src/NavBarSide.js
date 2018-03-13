@@ -6,7 +6,7 @@ class NavBarSide extends Component {
     return (
       <div className="navbar-side">
         {/* <h1> This is NavBarSide </h1> */}
-        <TreeFolders />
+        <TreeFolders token={this.props.token} />
       </div>
     );
   }
