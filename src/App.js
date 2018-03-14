@@ -13,6 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: "",
       token: "",
       file: "https://api.github.com/repos/subclinical/boat/contents/weakend.md",
       res: "",
@@ -74,7 +75,7 @@ class App extends Component {
 
   growTree = () => {
     // GitHub.populateTree('facebook', 'create-react-app')
-    GitHub.listRepos(this.state.token)
+    GitHub.accessElement('boat', '')
       .then(res => {
         console.log(res);
       })
