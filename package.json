@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "react_template",
   "version": "0.1.0",
   "private": true,
@@ -24,4 +25,39 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {}
+=======
+  "name": "node-knockout-react-node-starter",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "express": "^4.15.4",
+    "express-enforces-ssl": "^1.1.0",
+    "helmet": "^3.8.1",
+    "js-base64": "^2.4.3",
+    "monaco-editor": "^0.10.1",
+    "passport": "^0.4.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-monaco-editor": "^0.13.0",
+    "react-scripts": "1.0.17",
+    "ws": "4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  },
+  "scripts": {
+    "start": "concurrently \"react-scripts start\" \"node index\"",
+    "heroku-postbuild": "react-scripts build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "8.9.1",
+    "yarn": "1.3.2",
+    "npm": "5.5.1"
+  },
+  "proxy": "http://localhost:3001"
+>>>>>>> 179f48403bbf45521889130b9f8f77ec19450cb0
 }

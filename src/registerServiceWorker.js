@@ -35,6 +35,7 @@ export default function register() {
       if (isLocalhost) {
         // This is running on localhost. Lets check if a service worker still exists or not.
         checkValidServiceWorker(swUrl);
+<<<<<<< HEAD
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
@@ -44,6 +45,8 @@ export default function register() {
               'worker. To learn more, visit https://goo.gl/SC7cgQ'
           );
         });
+=======
+>>>>>>> 179f48403bbf45521889130b9f8f77ec19450cb0
       } else {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
