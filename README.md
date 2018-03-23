@@ -7,7 +7,7 @@ configured to deploy easily to Heroku.
 
 ## Locally
 
-To run the app locally run:
+To run the app locall
 
 ```
 git clone git@github.com:heroku-examples/node-knockout-react-node-starter.git
